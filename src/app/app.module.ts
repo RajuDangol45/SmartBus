@@ -10,6 +10,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireDatabase, AngularFireDatabaseModule, AngularFireList } from '@angular/fire/database';
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -25,7 +26,8 @@ import { environment } from '../environments/environment';
     AppRoutingModule,
     AngularFontAwesomeModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireDatabaseModule
   ],
   providers: [],
   bootstrap: [AppComponent]

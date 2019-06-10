@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { FirebaseDatabase } from '@angular/fire';
+import { FirebaseDatabase, AngularFireModule } from '@angular/fire';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,11 +14,23 @@ export class DashboardComponent implements OnInit {
   public lastRead: Date;
   public hasCrashed = false;
 
+  private stations = [
+    'Kathmandu',
+    'Bhaktapur',
+    'Patan'
+  ];
+
   private dataStoreInterval = 60000;
   private dataDeleteInterval = 3600000;
 
+  private fireList;
+  private receivedData;
+
+  private currentBusId = 'ABCE';
+
   constructor(
-    private fireStore: AngularFirestore
+    private fireStore: AngularFirestore,
+    private fireDb: AngularFireDatabase
   ) { }
 
   ngOnInit() {
@@ -32,6 +45,27 @@ export class DashboardComponent implements OnInit {
     });
     // this.storeBusData();
     // this.deleteStoredData();
+
+    this.fireList = this.fireDb.list('/');
+    this.fireList.snapshotChanges().subscribe(res => {
+      this.receivedData = {
+        busStop: res[0].payload.node_.value_,
+        humidity: res[1].payload.node_.value_,
+        speed: res[2].payload.node_.value_,
+        status: res[3].payload.node_.value_,
+        temperature: res[4].payload.node_.value_,
+        time: res[5].payload.node_.value_,
+        towards: res[6].payload.node_.value_
+      };
+      this.fireStore.collection('buses').doc(this.currentBusId).set({
+        crash_status: this.receivedData.status ? 'crashed' : 'not crashed',
+        current_station: this.stations[this.receivedData.busStop],
+        eta: this.receivedData.time,
+        humidity: this.receivedData.humidity,
+        speed: this.receivedData.speed,
+        temperature: this.receivedData.temperature
+      });
+    });
   }
 
   storeBusData() {
