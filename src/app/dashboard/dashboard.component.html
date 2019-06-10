@@ -1,3 +1,29 @@
-<p>
-  dashboard works!
-</p>
+<app-navbar></app-navbar>
+<div class="dashboard">
+  <div class="row">
+    <div class="col-12 last-read">
+      Last updated: {{ lastRead }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 refresh">
+      <button class="btn btn-primary" (click)="refreshPage()">
+        Refresh
+      </button>
+      <button class="btn btn-primary" (click)="deleteData()">
+        Delete Data
+      </button>
+    </div>
+  </div>
+  <div class="row" *ngFor="let bus of buses; let i = index;">
+    <div class="col-4" *ngIf="i % 3 === 0">
+      <app-bus-brief [busDetail]="buses[i]"></app-bus-brief>
+    </div>
+    <div class="col-4" *ngIf="(i + 1 < buses.length) && (i % 3 === 0)">
+      <app-bus-brief [busDetail]="buses[i+1]"></app-bus-brief>
+    </div>
+    <div class="col-4" *ngIf="(i + 2 < buses.length) && (i % 3 === 0)">
+      <app-bus-brief [busDetail]="buses[i+2]"></app-bus-brief>
+    </div>
+  </div>
+</div>

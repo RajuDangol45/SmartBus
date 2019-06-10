@@ -1,0 +1,68 @@
+<div class="card bus-brief">
+  <div class="row">
+    <div class="col-12 no-padding">
+      <div class="bus-id">
+        {{ busDetail.id }}
+      </div>
+    </div>
+  </div>
+  <div class="row people-temperature" *ngIf="busDetail.busData.crash_status === 'not crashed'">
+    <div class="col-6">
+      <div class="row">
+        <div class="col-3 icon-col">
+          <fa name="fas fa-home" class="home-icon"></fa>
+        </div>
+        <div class="col-9 station-detail">
+          <span class="station-name">{{ busDetail.busData.current_station }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="row">
+        <div class="col-3 icon-col">
+          <fa name="fas fa-thermometer-0" class="thermometer-icon"></fa>
+        </div>
+        <div class="col-9 temperature-detail" [ngClass]="{'warning': busDetail.busData.temperature > 30}">
+          <span class="temperature-num">{{ busDetail.busData.temperature }}</span> C
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row speed-crash" *ngIf="busDetail.busData.crash_status === 'not crashed'">
+    <div class="col-6">
+      <div class="row">
+        <div class="col-3 icon-col">
+          <fa name="fas fa-tachometer" class="tachometer-icon"></fa>
+        </div>
+        <div class="col-9 speed-detail" [ngClass]="{'warning': busDetail.busData.speed > 60}">
+          <span class="speed-num">{{ busDetail.busData.speed }}</span> km/h
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="row">
+        <div class="col-3 icon-col">
+          <fa name="fas fa-tint" class="humidity-icon"></fa>
+        </div>
+        <div class="col-9 humidity-detail" [ngClass]="{'warning': busDetail.busData.humidity > 80}">
+          <span class="humidity-num">{{ busDetail.busData.humidity }}</span> %
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="busDetail.busData.crash_status === 'crashed'">
+    <div class="col-3 icon-col">
+      <fa name="fas fa-exclamation-triangle" class="crashed-icon"></fa>
+    </div>
+    <div class="col-9 crash-detail">
+      <span class="speed-num">CRASHED</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="full-details" (click)="seeBusDetails()">
+        See full details
+      </div>
+    </div>
+  </div>
+</div>

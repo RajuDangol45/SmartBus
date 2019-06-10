@@ -1,0 +1,83 @@
+.bus-brief {
+  margin: 20px 0;
+  padding: 0 15px;
+  box-shadow: 1px 1px 4px 0px #888888;
+  border-radius: 6px;
+
+  .bus-id {
+    font-size: 22px;
+    padding: 10px 15px;
+    background-color: black;
+    color: white;
+    border-radius: 6px 6px 0 0;
+  }
+
+  .full-details {
+    width: fit-content;
+    float: right;
+    color: blue;
+    cursor: pointer;
+    padding: 10px 0;
+  }
+
+  .people-temperature {
+    margin-top: 15px;
+  }
+
+  .home-icon {
+    color: black;
+  }
+
+  .thermometer-icon {
+    color: #7cb342;
+  }
+
+  .tachometer-icon {
+    color: #f0c30e;
+  }
+
+  .humidity-icon {
+    color: #2196f3;
+  }
+
+  .station-detail, .temperature-detail, .speed-detail, .humidity-detail{
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+  }
+
+  .crashed-icon{
+    color: #fc8d00;
+    font-size: 55px;
+  }
+
+  .crash-detail{
+    display: flex;
+    align-items: center;
+    font-size: 55px;
+    color: red;
+  }
+}
+
+.no-padding {
+  padding: 0;
+}
+
+fa {
+  padding: 0 5px;
+  font-size: 24px;
+}
+
+.icon-col{
+  text-align: right;
+}
+
+.warning{
+  color: red !important;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.ok{
+  color: green !important;
+}

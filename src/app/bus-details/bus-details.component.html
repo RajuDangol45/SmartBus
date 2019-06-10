@@ -1,0 +1,40 @@
+<app-navbar></app-navbar>
+<div class="bus-id">
+  {{ busID }}
+</div>
+<div class="container-fluid bus-details" *ngIf="!hasCrashed">
+  <div class="row current-station-row" [hidden]="!dataLoaded">
+    <div class="col-12">
+      <fa name="fas fa-map-marker" class="map-marker-icon"></fa> <span
+        class="current-station">{{ currentStation }}</span>
+    </div>
+  </div>
+  <div class="row eta-row" [hidden]="!dataLoaded">
+    <div class="col-12">
+      <span class="eta">{{ eta }}</span> minutes till
+    </div>
+  </div>
+  <div class="row next-station-row" [hidden]="!dataLoaded">
+    <div class="col-12">
+      <fa name="fas fa-map-marker" class="map-marker-icon"></fa> <span class="next-station">{{ nextStation }}</span>
+    </div>
+  </div>
+  <div class="row temperature-row">
+    <div class="col-12">
+      <div id="temperatureChart"></div>
+    </div>
+  </div>
+  <div class="row humidity-row">
+    <div class="col-12">
+      <div id="humidityChart"></div>
+    </div>
+  </div>
+  <div class="row speed-row">
+    <div class="col-12">
+      <div id="speedChart"></div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid crashed-text" *ngIf="hasCrashed && dataLoaded">
+  Unfortunately the bus crashed at <span class="crash-time">{{ crashedAgo.toString().replace('GMT+0545 (Nepal Time)','') }}</span> when going from <span class="station">{{ currentStation }}</span> to <span class="station">{{ nextStation }}</span>.
+</div>
