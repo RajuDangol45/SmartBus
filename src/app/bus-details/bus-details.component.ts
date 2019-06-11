@@ -14,7 +14,8 @@ export class BusDetailsComponent implements OnInit {
 
   private stations = [
     'Kathmandu',
-    'Bhaktapur'
+    'Bhaktapur',
+    'Patan'
   ];
 
   temperature = [];

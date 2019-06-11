@@ -16,7 +16,8 @@ export class DashboardComponent implements OnInit {
 
   private stations = [
     'Kathmandu',
-    'Bhaktapur'
+    'Bhaktapur',
+    'Patan'
   ];
 
   private dataStoreInterval = 60000;
@@ -56,6 +57,7 @@ export class DashboardComponent implements OnInit {
         time: res[5].payload.node_.value_,
         towards: res[6].payload.node_.value_
       };
+      this.receivedData.speed = this.receivedData.speed * 30;
       this.fireStore.collection('buses').doc(this.currentBusId).set({
         crash_status: this.receivedData.status ? 'not crashed' : 'crashed',
         current_station: this.stations[this.receivedData.busStop],
