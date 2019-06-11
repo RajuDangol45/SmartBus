@@ -58,20 +58,23 @@ export class DashboardComponent implements OnInit {
         towards: res[6].payload.node_.value_
       };
       this.receivedData.speed = this.receivedData.speed * 30;
-      // if (this.receivedData.status === 'false') {
-      //   if (this.buses.length > 0) {
-      //     this.buses.forEach(bus => {
-      //       this.fireStore.collection(bus.id).add({
-      //         date: new Date(),
-      //         temperature: bus.busData.temperature,
-      //         crash_status: bus.busData.crash_status,
-      //         humidity: bus.busData.humidity,
-      //         speed: bus.busData.speed,
-      //         eta: bus.busData.eta
-      //       });
-      //     });
-      //   }
-      // }
+      if (this.receivedData.status === 'false' && !this.hasCrashed) {
+        this.hasCrashed = true;
+        if (this.buses.length > 0) {
+          this.buses.forEach(bus => {
+            this.fireStore.collection(bus.id).add({
+              date: new Date(),
+              temperature: bus.busData.temperature,
+              crash_status: bus.busData.crash_status,
+              humidity: bus.busData.humidity,
+              speed: bus.busData.speed,
+              eta: bus.busData.eta
+            });
+          });
+        }
+      } else if(this.receivedData.status === 'true' && this.hasCrashed) {
+        this.hasCrashed = false;
+      }
       this.fireStore.collection('buses').doc(this.currentBusId).set({
         crash_status: (this.receivedData.status === 'true') ? 'not crashed' : 'crashed',
         current_station: this.stations[this.receivedData.busStop],
