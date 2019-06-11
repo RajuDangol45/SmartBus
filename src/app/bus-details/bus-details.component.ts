@@ -14,8 +14,7 @@ export class BusDetailsComponent implements OnInit {
 
   private stations = [
     'Kathmandu',
-    'Bhaktapur',
-    'Patan'
+    'Bhaktapur'
   ];
 
   temperature = [];
@@ -23,7 +22,7 @@ export class BusDetailsComponent implements OnInit {
   humidity = [];
   timeLine = [];
   currentStation: string;
-  eta: string;
+  eta: number;
   nextStation: string;
   dataLoaded = false;
 
@@ -39,7 +38,10 @@ export class BusDetailsComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.busID = params.id;
       this.currentStation = params.current_station;
-      this.eta = params.eta;
+      let eta1 = params.eta;
+      eta1 = eta1 / 60;
+      this.eta = parseInt(eta1);
+      this.eta.toString();
       for (let i = 0; i < this.stations.length; i++) {
         if (this.stations[i] === this.currentStation) {
           if (i + 1 === this.stations.length) {

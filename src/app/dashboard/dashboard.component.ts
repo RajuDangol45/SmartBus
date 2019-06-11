@@ -16,8 +16,7 @@ export class DashboardComponent implements OnInit {
 
   private stations = [
     'Kathmandu',
-    'Bhaktapur',
-    'Patan'
+    'Bhaktapur'
   ];
 
   private dataStoreInterval = 60000;
@@ -26,7 +25,7 @@ export class DashboardComponent implements OnInit {
   private fireList;
   private receivedData;
 
-  private currentBusId = 'ABCE';
+  private currentBusId = 'BA 75 55 53';
 
   constructor(
     private fireStore: AngularFirestore,
@@ -58,7 +57,7 @@ export class DashboardComponent implements OnInit {
         towards: res[6].payload.node_.value_
       };
       this.fireStore.collection('buses').doc(this.currentBusId).set({
-        crash_status: this.receivedData.status ? 'crashed' : 'not crashed',
+        crash_status: this.receivedData.status ? 'not crashed' : 'crashed',
         current_station: this.stations[this.receivedData.busStop],
         eta: this.receivedData.time,
         humidity: this.receivedData.humidity,
