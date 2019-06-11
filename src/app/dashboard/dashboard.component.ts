@@ -58,6 +58,7 @@ export class DashboardComponent implements OnInit {
         towards: res[6].payload.node_.value_
       };
       this.receivedData.speed = this.receivedData.speed * 30;
+      this.receivedData.speed = Math.round(this.receivedData.speed * 100) / 100;
       if (this.receivedData.status === 'false' && !this.hasCrashed) {
         this.hasCrashed = true;
         if (this.buses.length > 0) {
@@ -72,7 +73,7 @@ export class DashboardComponent implements OnInit {
             });
           });
         }
-      } else if(this.receivedData.status === 'true' && this.hasCrashed) {
+      } else if (this.receivedData.status === 'true' && this.hasCrashed) {
         this.hasCrashed = false;
       }
       this.fireStore.collection('buses').doc(this.currentBusId).set({
