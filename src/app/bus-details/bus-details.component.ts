@@ -23,7 +23,7 @@ export class BusDetailsComponent implements OnInit {
   humidity = [];
   timeLine = [];
   currentStation: string;
-  eta: number;
+  eta: string;
   nextStation: string;
   dataLoaded = false;
 
@@ -41,8 +41,8 @@ export class BusDetailsComponent implements OnInit {
       this.currentStation = params.current_station;
       let eta1 = params.eta;
       eta1 = eta1 / 60;
-      this.eta = parseInt(eta1);
-      this.eta.toString();
+      eta1 = parseInt(eta1);
+      this.eta = eta1.toString();
       for (let i = 0; i < this.stations.length; i++) {
         if (this.stations[i] === this.currentStation) {
           if (i + 1 === this.stations.length) {
@@ -67,6 +67,7 @@ export class BusDetailsComponent implements OnInit {
       this.temperature = [];
       this.speed = [];
       this.humidity = [];
+      this.timeLine = [];
       timelineData.sort((a, b) => {
         return ((b.busData as any).date.seconds) - ((a.busData as any).date.seconds);
       });
@@ -88,7 +89,10 @@ export class BusDetailsComponent implements OnInit {
           this.timeLine.splice(0, 1);
         }
         this.timeLine.push(this.localize(this.toDateTime((timedData.busData as any).date.seconds)));
-        this.eta = (timedData.busData as any).eta;
+        let eta1 = (timedData.busData as any).eta;
+        eta1 = eta1 / 60;
+        eta1 = parseInt(eta1);
+        this.eta = eta1.toString();
         if ((timedData.busData as any).crash_status === 'crashed') {
           if (this.crashedAgo && (this.crashedAgo > (timedData.busData as any).date.seconds)) {
             this.crashedAgo = (timedData.busData as any).date.seconds;
@@ -107,7 +111,7 @@ export class BusDetailsComponent implements OnInit {
   }
 
   loadChart(divId, title, dataForChart, yAxisTitle) {
-    const dataPoints = [];
+    let dataPoints = [];
     let index = 0;
     for (const res of dataForChart) {
       dataPoints.push({
@@ -135,7 +139,7 @@ export class BusDetailsComponent implements OnInit {
           type: 'line',
           dataPoints: dataPoints
         }]
-    })
+    });
     chart.render();
   }
 
