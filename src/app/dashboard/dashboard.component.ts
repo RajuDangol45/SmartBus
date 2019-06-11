@@ -59,13 +59,14 @@ export class DashboardComponent implements OnInit {
       };
       this.receivedData.speed = this.receivedData.speed * 30;
       this.fireStore.collection('buses').doc(this.currentBusId).set({
-        crash_status: this.receivedData.status ? 'not crashed' : 'crashed',
+        crash_status: (this.receivedData.status === 'true') ? 'not crashed' : 'crashed',
         current_station: this.stations[this.receivedData.busStop],
         eta: this.receivedData.time,
         humidity: this.receivedData.humidity,
         speed: this.receivedData.speed,
         temperature: this.receivedData.temperature
       });
+      debugger
     });
   }
 
